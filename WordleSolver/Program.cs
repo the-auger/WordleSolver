@@ -2,34 +2,43 @@
 using WordleSolver.ClassLibrary;
 
 Console.Title = "Wordle Solver";
-
-Console.Write("Give me a 5-letter word: ");
-var word = Console.ReadLine()!.ToUpperInvariant();
-
+string word;
 var words = File.ReadAllLines("FiveLetterWords.txt");
 
-var solver = new Solver(DefaultValidator,
-    words.Select(w => w.ToUpperInvariant()).ToArray(),
-    Console.WriteLine);
-
-try
+while (true)
 {
+    Console.Write("Give me a 5-letter word: ");
+    word = Console.ReadLine()?.ToUpperInvariant();
 
-    var sw = new Stopwatch();
+    if (word?.Length != 5) continue;
 
-    sw.Start();
-    var result = await solver.SolveAsync();
-    sw.Stop();
+    var solver = new Solver(DefaultValidator,
+        5,
+        words.Select(w => w.ToUpperInvariant()).ToArray(),
+        Console.WriteLine);
 
-    Console.WriteLine(result);
-    Console.WriteLine($"Duration: {sw.Elapsed}");
+    try
+    {
+
+        var sw = new Stopwatch();
+
+        sw.Start();
+        var result = await solver.SolveAsync();
+        sw.Stop();
+
+        Console.ForegroundColor = result.Success ? ConsoleColor.Green : ConsoleColor.Red;
+        Console.WriteLine(result);
+        Console.ResetColor();
+
+        Console.WriteLine($"Duration: {sw.Elapsed}");
+    }
+    catch (ApplicationException e)
+    {
+        Console.WriteLine(e.Message);
+    }
+
+    Console.WriteLine($"Word was: {word}");
 }
-catch (ApplicationException e)
-{
-    Console.WriteLine(e.Message);
-}
-
-Console.WriteLine($"Word was: {word}");
 
 CharacterValidation DefaultValidator(int idx, char arg)
 {
