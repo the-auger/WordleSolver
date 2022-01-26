@@ -22,9 +22,10 @@ public sealed class Solver
         _maxWordLength = maxWordLength;
         _maxTries = maxTries;
         _correctCharacters = new char[_maxWordLength];
-        _possibleWords = new LinkedList<string>(possibleWords ?? throw new ArgumentNullException(nameof(possibleWords)));
         _output = output;
-        _initialSize = _possibleWords.Count;
+        _initialSize = possibleWords.Count;
+
+        _possibleWords = new LinkedList<string>(possibleWords ?? throw new ArgumentNullException(nameof(possibleWords)));
     }
 
     public Task<Result> SolveAsync()
