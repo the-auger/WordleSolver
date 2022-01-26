@@ -6,6 +6,9 @@ I have yet to do any optimizations.
 
 ## Benchmark
 
+* AALST is Best case scenario (first)
+* ZYNGA is Worst case scenario (last)
+
 ``` ini
 
 BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
