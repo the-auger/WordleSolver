@@ -8,8 +8,8 @@ public sealed class Solver
     private readonly char[] _correctCharacters;
     private readonly HashSet<char> _wrongCharacters = new();
     private readonly LinkedList<string> _possibleWords;
+    private readonly double _initialSize;
     private int _tries;
-    private double _initialSize;
 
     public Solver(Func<int, char, CharacterValidation> validator,
         int maxWordLength,
