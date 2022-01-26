@@ -9,6 +9,7 @@ public sealed class Solver
     private readonly HashSet<char> _wrongCharacters = new();
     private readonly LinkedList<string> _possibleWords;
     private int _tries;
+    private double _initialSize;
 
     public Solver(Func<int, char, CharacterValidation> validator,
         int maxWordLength,
@@ -20,6 +21,7 @@ public sealed class Solver
         _correctCharacters = new char[_maxWordLength];
         _possibleWords = new LinkedList<string>(possibleWords ?? throw new ArgumentNullException(nameof(possibleWords)));
         _output = output;
+        _initialSize = _possibleWords.Count;
     }
 
     public Task<Result> SolveAsync()
@@ -30,7 +32,7 @@ public sealed class Solver
         {
             var currentGuess = _possibleWords.First();
 
-            _output?.Invoke($"Guessing: {currentGuess}");
+            _output?.Invoke($"Guessing: {currentGuess} ({_possibleWords.Count / _initialSize:P} words left)");
 
             EvaluatePossibleWord(currentGuess);
 
