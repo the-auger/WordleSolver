@@ -32,7 +32,7 @@ public sealed class WordleSolver
 
         while (true)
         {
-            var currentGuess = _tries == 0 ? I_AM_CHEATING : _possibleWords.First();
+            var currentGuess = _possibleWords.First();
 
             _output($"Guessing: {currentGuess}");
 
@@ -111,6 +111,4 @@ public sealed class WordleSolver
             }
         }
     }
-
-    private const string I_AM_CHEATING = "AEIOU";
 }
