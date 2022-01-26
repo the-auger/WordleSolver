@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WordleSolver.ClassLibrary\WordleSolver.ClassLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="FiveLetterWords.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

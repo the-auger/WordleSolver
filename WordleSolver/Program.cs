@@ -1,9 +1,15 @@
 ﻿using System.Diagnostics;
+using WordleSolver.ClassLibrary;
 
-var word = "worse".ToUpperInvariant();
+Console.Title = "Wordle Solver";
+
+Console.Write("Give me a 5-letter word: ");
+var word = Console.ReadLine()!.ToUpperInvariant();
+
 var words = File.ReadAllLines("FiveLetterWords.txt");
-var solver = new WordleSolver.WordleSolver(TestValidator,
-    words.Select(word => word.ToUpperInvariant()).ToArray(),
+
+var solver = new Solver(DefaultValidator,
+    words.Select(w => w.ToUpperInvariant()).ToArray(),
     Console.WriteLine);
 
 try
@@ -25,14 +31,14 @@ catch (ApplicationException e)
 
 Console.WriteLine($"Word was: {word}");
 
-WordleSolver.WordleSolver.CharacterValidation TestValidator(int idx, char arg)
+CharacterValidation DefaultValidator(int idx, char arg)
 {
     if (word.Contains(char.ToUpperInvariant(arg)))
     {
         return word[idx] == arg
-            ? WordleSolver.WordleSolver.CharacterValidation.Correct
-            : WordleSolver.WordleSolver.CharacterValidation.Exists;
+            ? CharacterValidation.Correct
+            : CharacterValidation.Exists;
     }
 
-    return WordleSolver.WordleSolver.CharacterValidation.Wrong;
+    return CharacterValidation.Wrong;
 }
