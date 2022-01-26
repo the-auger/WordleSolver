@@ -5,6 +5,8 @@ Console.Title = "Wordle Solver";
 string word;
 var words = File.ReadAllLines("FiveLetterWords.txt");
 
+Console.WriteLine($"Loaded {words.Length:N0} words");
+
 while (true)
 {
     Console.Write("Give me a 5-letter word: ");
