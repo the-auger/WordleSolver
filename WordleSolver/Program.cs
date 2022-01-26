@@ -16,6 +16,7 @@ while (true)
 
     var solver = new Solver(DefaultValidator,
         5,
+        6,
         words.Select(w => w.ToUpperInvariant()).ToArray(),
         Console.WriteLine);
 
@@ -28,7 +29,7 @@ while (true)
         var result = await solver.SolveAsync();
         sw.Stop();
 
-        Console.ForegroundColor = result.Success ? ConsoleColor.Green : ConsoleColor.Red;
+        Console.ForegroundColor = result.Win ? ConsoleColor.Green : ConsoleColor.Red;
         Console.WriteLine(result);
         Console.ResetColor();
 

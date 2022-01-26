@@ -23,7 +23,7 @@ public class Benchy
     [IterationSetup]
     public void IterationSetup()
     {
-        _solver = new Solver(DefaultValidator, 5, possibleWords);
+        _solver = new Solver(DefaultValidator, 5, 6, possibleWords);
     }
 
     [Benchmark(Baseline = true)]

@@ -4,6 +4,7 @@ public sealed class Solver
 {
     private readonly Func<int, char, CharacterValidation> _validator;
     private readonly int _maxWordLength;
+    private readonly int _maxTries;
     private readonly Action<string>? _output;
     private readonly char[] _correctCharacters;
     private readonly HashSet<char> _wrongCharacters = new();
@@ -13,11 +14,13 @@ public sealed class Solver
 
     public Solver(Func<int, char, CharacterValidation> validator,
         int maxWordLength,
+        int maxTries,
         IReadOnlyCollection<string> possibleWords,
         Action<string> output = null)
     {
         _validator = validator ?? throw new ArgumentNullException(nameof(validator));
         _maxWordLength = maxWordLength;
+        _maxTries = maxTries;
         _correctCharacters = new char[_maxWordLength];
         _possibleWords = new LinkedList<string>(possibleWords ?? throw new ArgumentNullException(nameof(possibleWords)));
         _output = output;
@@ -48,11 +51,13 @@ public sealed class Solver
             break;
         }
 
-        return Task.FromResult(new Result(success,
+        return Task.FromResult(new Result(
+            _tries <= _maxTries,
+            success,
             _tries,
             success
-            ? string.Join(string.Empty, _correctCharacters)
-            : string.Join(string.Empty, _correctCharacters.Select(c => char.IsLetter(c) ? c : '?'))));
+                ? string.Join(string.Empty, _correctCharacters)
+                : string.Join(string.Empty, _correctCharacters.Select(c => char.IsLetter(c) ? c : '?'))));
     }
 
     private bool CheckIfCorrect() => _correctCharacters.All(char.IsLetter);
